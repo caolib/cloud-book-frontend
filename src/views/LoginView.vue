@@ -34,6 +34,7 @@ const login = async function () {
     readerStore.setReader(returnReader);
     console.log("returnReader:" + returnReader.token);
     await router.push("/home");
+    location.reload();
   });
 
   // 显示加载中动画

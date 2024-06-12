@@ -39,7 +39,7 @@ instance.interceptors.response.use(
         }
 
         router.push('/login');
-        window.local.reload();
+
 
         // 将异步的状态设置为失败状态
         return Promise.reject(error);

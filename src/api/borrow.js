@@ -1,4 +1,4 @@
-import request from "@/util/request";
+import request from "@/utils/request";
 
 // 查询个人的借书记录
 const getBorrowByReaderIdService = function () {
@@ -10,6 +10,16 @@ const borrowService = function (isbn, dueDate) {
     return request.get('/borrow/borrowBook', {
         params: {
             isbn: isbn,
+            dueDate: dueDate
+        }
+    });
+};
+
+const borrowService2 = function (isbn, borrowDate,dueDate) {
+    return request.get('/borrow/borrow2', {
+        params: {
+            isbn: isbn,
+            borrowDate:borrowDate,
             dueDate: dueDate
         }
     });
@@ -40,6 +50,7 @@ const deleteBorrowBatchService = function (ids) {
 export {
     getBorrowByReaderIdService,
     borrowService,
+    borrowService2,
     returnBookService,
     deleteByIdService,
     deleteBorrowBatchService
