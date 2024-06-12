@@ -2,6 +2,7 @@ import request from "@/utils/request";
 
 // 条件分页查询
 const getAllBookService = function (condition) {
+    console.log('搜索条件:' + JSON.stringify(condition));
     return request.post("/book", condition);
 };
 

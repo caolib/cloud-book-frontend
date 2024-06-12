@@ -1,0 +1,19 @@
+/* 引用块样式 */
+blockquote {
+    font-family: '方正楷体', 'Microsoft YaHei UI', serif;
+    font-size: 20px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    margin-bottom: 16px;
+    margin-top: 16px;
+    padding: 10px 10px 10px 20px;
+    background: #ffffff;
+    border-left: 5px solid #42a5f5;
+    overflow: auto;
+    box-shadow: 3px 8px 10px 2px rgb(173 173 173);
+}
+
+/* 设置蓝色标签字体大小 */
+.ant-tag-blue {
+    font-size: large;
+}

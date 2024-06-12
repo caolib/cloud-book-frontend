@@ -3,32 +3,51 @@ import BookTableView from "@/components/BookTableView.vue";
 
 const selectedKeys = ref(["1"]);
 import {ref} from 'vue';
+import BorrowTableView from "@/components/BorrowTableView.vue";
+import {logoutService} from "@/api/logout.js";
 
+// 登出
+const logout = async () => {
+  await logoutService();
+}
 
 </script>
 
 <template>
   <a-layout>
-    <a-layout-header :style="{ position: 'fixed', zIndex: 1, width: '100%' }">
-      <div class="logo"/>
+    <a-layout-header :style="{ position: 'fixed', zIndex: 1, width: '100%',background: 'white' }">
       <a-menu v-model:selectedKeys="selectedKeys" theme="light" mode="horizontal" :style="{ lineHeight: '64px' }">
-        <a-menu-item key="1">nav 1</a-menu-item>
-        <a-menu-item key="2">nav 2</a-menu-item>
-        <a-menu-item key="3">nav 3</a-menu-item>
+        <a-menu-item>
+          <a-avatar :size="64" src="https://s2.loli.net/2024/06/02/wuJknzxaFigDSdL.gif"/>
+        </a-menu-item>
+        <a-menu-item key="1">
+          <a-button type="primary" ghost size="large">图书</a-button>
+        </a-menu-item>
+        <a-menu-item key="2">
+          <a-button type="primary" ghost size="large">借阅</a-button>
+        </a-menu-item>
+        <a-menu-item key="3">
+          <a-button type="primary" ghost size="large">我的</a-button>
+        </a-menu-item>
+        <a-menu-item key="4">
+          <a-button size="large" @click="logout" danger>登出</a-button>
+        </a-menu-item>
       </a-menu>
     </a-layout-header>
 
     <!-- 中间 -->
     <a-layout-content :style="{ padding: '0 50px', marginTop: '64px' }">
-
       <!-- 书籍表格 -->
-      <book-table-view :style="{marginTop: '50px'}"/>
+      <book-table-view v-if="selectedKeys[0] === '1'" :style="{marginTop: '50px'}"/>
+      <!-- 借阅记录表格 -->
+      <borrow-table-view v-if="selectedKeys[0] === '2'" :style="{marginTop: '20px'}"/>
+      <div v-if="selectedKeys[0] === '3'">Content for nav 3</div>
     </a-layout-content>
 
     <!-- 底部 -->
-    <a-layout-footer :style="{ textAlign: 'center' }">
-      这是页脚
-    </a-layout-footer>
+    <!--<a-layout-footer :style="{ textAlign: 'center' }">-->
+    <!--  我不是源神-->
+    <!--</a-layout-footer>-->
   </a-layout>
 </template>
 

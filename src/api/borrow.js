@@ -24,7 +24,11 @@ const borrowService2 = function (isbn, borrowDate,dueDate) {
         }
     });
 };
-// 还书
+/**
+ * 归还书籍
+ * @param id 借阅号
+ * @param isbn 书号
+ */
 const returnBookService = function (id, isbn) {
     console.log(id);
     return request.get('/borrow/returnBook', {

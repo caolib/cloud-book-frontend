@@ -1,4 +1,4 @@
-import request from "@/util/request";
+import request from "@/utils/request";
 
 // 修改用户信息
 const updateReaderService = function (reader) {

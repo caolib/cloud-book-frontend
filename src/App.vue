@@ -28,14 +28,16 @@ const locale = zhCN;
       :locale="locale"
       :theme="{
       token: {
-        colorPrimary: '#00b96b',
+        colorPrimary: '#108ee9',
         colorError: '#ff6b6b',
-      },
+        fontFamily:'方正楷体',
+        fontSize:16
+      }
     }">
 
     <RouterView/>
 
-    <a-back-top tooltip="回到顶部" />
+    <a-back-top tooltip="回到顶部"/>
   </a-config-provider>
 </template>
 
