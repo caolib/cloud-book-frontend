@@ -39,7 +39,7 @@ const updateReader = async () => {
       </a-select>
     </a-descriptions-item>
     <a-descriptions-item label="令牌">
-      <a-typography-paragraph :copyable="{ tooltip: false }">
+      <a-typography-paragraph :copyable="true">
         {{ reader.token }}
       </a-typography-paragraph>
     </a-descriptions-item>

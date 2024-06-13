@@ -15,16 +15,15 @@ export const useReaderStore = defineStore('reader', () => {
             tel: '',
             token: ''
         });
+        // 保存用户的信息
         const setReader = (data) => {
             Object.keys(reader).forEach(key => {
                 reader[key] = data[key] || '';
             });
         }
-
+        // 清空用户的信息
         const clearReader = () => {
-            Object.keys(reader).forEach(key => {
-                reader[key] = '';
-            });
+            localStorage.removeItem('reader');
         }
         return {
             reader, setReader, clearReader

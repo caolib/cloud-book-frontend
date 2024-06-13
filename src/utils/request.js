@@ -1,15 +1,15 @@
 import axios from "axios";
 import router from "@/router";
-// import {useTokenStore} from "@/stores/token.js";
-
 import {useReaderStore} from "@/stores/reader.js";
+import {useAdminStore} from "@/stores/admin.js";
+
 import {message} from "ant-design-vue";
+import {ref} from "vue";
 
 
 const baseURL = "/api";
 // const baseURL = "http://localhost:10086/";
 const instance = axios.create({baseURL});
-// const tokenStore = useTokenStore();
 
 
 //响应拦截器，状态码为2xx时执行成功回调，否则执行失败回调
@@ -29,18 +29,20 @@ instance.interceptors.response.use(
         switch (code) {
             case 401:
                 message.error('请先登录！');
+                router.push('/login');
                 break;
             case 419:
                 message.error('身份已过期,请重新登录！');
+                router.push('/login');
+                break;
+            case 500:
+                message.error('服务器异常！');
+                console.log(error.response.message)
                 break;
             default:
-                message.error('服务器异常！' + code);
+                message.error('未知异常！' + code);
                 break;
         }
-
-        router.push('/login');
-
-
         // 将异步的状态设置为失败状态
         return Promise.reject(error);
     }
@@ -58,9 +60,16 @@ instance.interceptors.request.use(
         if (config.url.endsWith('/login') || config.url.endsWith('/register')) {
             return config;
         }
-        // 获取token
-        const readerStore = useReaderStore();
-        const token = readerStore.reader.token;
+
+        let token = ''
+
+        if (localStorage.getItem('reader') != null) {
+            const readerStore = useReaderStore();
+            token = readerStore.reader.token;
+        } else if (localStorage.getItem('admin') != null) {
+            const adminStore = useAdminStore();
+            token = adminStore.admin.token;
+        }
 
         //如果有token，将token放入请求头中
         if (token != null) {

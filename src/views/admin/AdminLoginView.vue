@@ -1,23 +1,21 @@
 <script setup>
 import {reactive, ref} from "vue";
 import {UserOutlined, LockOutlined} from "@ant-design/icons-vue";
-import {loginService} from "@/api/login";
+import {adminLoginService} from "@/api/login";
 import {message} from "ant-design-vue";
-import {useReaderStore} from "@/stores/reader";
+import {useAdminStore} from "@/stores/admin.js";
+
 import router from "@/router";
-import {registerService} from "@/api/register.js";
+import {adminRegisterService, registerService} from "@/api/register.js";
 
-const readerStore = useReaderStore();
+const adminStore = useAdminStore();
 
-// 返回的用户信息
-let returnReader = reactive({
+// 返回的管理员信息
+let returnAdmin = reactive({
   id: "",
   username: "",
-  password: "",
   nickname: "",
-  gender: "",
-  age: "",
-  tel: "",
+  password: "",
   token: "",
 });
 
@@ -29,7 +27,7 @@ const loginDto = reactive({
 
 const loading = ref(false);
 
-// 用户登录
+// 管理员登录
 const login = async function () {
   loading.value = true;
   // 5秒超时
@@ -39,16 +37,15 @@ const login = async function () {
     }, 5000);
   });
   // 登录
-  Promise.race([loginService(loginDto), timeout])
+  Promise.race([adminLoginService(loginDto), timeout])
       .then(async (res) => {
-        returnReader = res.data;
-        returnReader.password = loginDto.password;
+        returnAdmin = res.data;
+        returnAdmin.password = loginDto.password;
         message.success("hello," + res.data.nickname, 3);
         // 保存用户信息和token
-        readerStore.setReader(returnReader);
-        // console.log("returnReader:" + JSON.stringify(returnReader));
+        adminStore.setAdmin(returnAdmin);
         loading.value = false;
-        await router.push("/home");
+        await router.push("/admin/home");
       })
       .catch((error) => {
         loading.value = false;
@@ -62,22 +59,18 @@ const registerDto = reactive({
   username: "",
   password: "",
   nickname: "",
-  gender: "男",
-  age: "",
-  tel: "",
 });
 
 // 注册
 const register = async () => {
   console.log("registerDto:" + JSON.stringify(registerDto));
-  await registerService(registerDto).then(() => {
+  await adminRegisterService(registerDto).then(() => {
     message.success("注册成功,可以登录了！", 3);
     showModal("login")
   }).catch(() => {
     message.error("注册失败！", 3);
   });
 };
-
 
 // 登录、注册对话框显示控制
 const showLogin = ref(false);
@@ -158,24 +151,9 @@ const showModal = (status) => {
                 </template>
               </a-input-password>
             </a-form-item>
-            <!-- 电话 -->
-            <a-form-item label="电话" name="tel" :rules="[{ required: true, message: '请输入电话' }]">
-              <a-input v-model:value="registerDto.tel"/>
-            </a-form-item>
             <!-- 昵称 -->
             <a-form-item label="昵称">
               <a-input-password v-model:value="registerDto.nickname" allow-clear show-count :maxlength="16"/>
-            </a-form-item>
-            <!-- 年龄 -->
-            <a-form-item label="年龄">
-              <a-input-password v-model:value="registerDto.age"/>
-            </a-form-item>
-            <!-- 性别 -->
-            <a-form-item label="性别" name="password">
-              <a-select v-model:value="registerDto.gender">
-                <a-select-option value="男">男</a-select-option>
-                <a-select-option value="女">女</a-select-option>
-              </a-select>
             </a-form-item>
           </a-form>
         </div>

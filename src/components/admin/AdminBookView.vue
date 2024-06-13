@@ -1,10 +1,9 @@
 <script setup>
 import {h, onMounted, reactive, ref} from 'vue';
-import {getAllBookService} from "@/api/book.js";
-import {CheckCircleTwoTone} from "@ant-design/icons-vue";
+import {deleteBookService, getAllBookService} from "@/api/book.js";
+import {DeleteFilled} from "@ant-design/icons-vue";
 import {message} from "ant-design-vue";
 import dayjs from "dayjs";
-import {borrowService2} from "@/api/borrow.js"
 
 const large = ref('large')
 
@@ -104,28 +103,14 @@ const fetchBooks = async () => {
   loading.value = false;
 }
 
-
-// 弹出借阅对话框
-const borrow = (record) => {
-  currentBook.value = record
-  console.log(record);
-  open.value = true;
-};
 const open = ref(false);
 
-// 借阅图书
-const borrowBook = async () => {
-  const isbn = currentBook.value.isbn;
-  if (date.value == null) {
-    message.error('请选择借阅时间!')
-    return;
-  }
-  const borrowDate = dayjs(date.value[0]).format('YYYY-MM-DD').toString();
-  const dueDate = dayjs(date.value[1]).format('YYYY-MM-DD').toString();
-  await borrowService2(isbn, borrowDate, dueDate);
-
-  message.success('借阅成功!')
-  open.value = false;
+// 删除图书
+const deleteBook = async (record) => {
+  const isbn = record.isbn;
+  await deleteBookService(isbn);
+  message.success('删除成功!')
+  await fetchBooks();
 }
 
 // 当前图书
@@ -146,9 +131,7 @@ const date = ref();
     <a-table :data-source="bookData" :columns="columns" :scroll="{ y: '800px' }" :style="{marginTop: '10px'}"
              :pagination="{ position: ['bottomCenter'], ...pagination }"
              :row-class-name="(_record, index) => (index % 2 === 1 ? 'table-striped' : null)" bordered>
-      <!--展开列标题-->
       <template #expandColumnTitle/>
-
       <!--表头-->
       <template #headerCell="{ column }">
         <!--搜索框-->
@@ -183,15 +166,10 @@ const date = ref();
       <!--表格内容定义-->
       <template #bodyCell="{ column,record }">
         <template v-if="column.key === 'action'">
-          <a-button @click="borrow(record)" type="dashed" :size="large" :icon="h(CheckCircleTwoTone)">借阅</a-button>
+          <a-button @click="deleteBook(record)" type="dashed" :size="large" danger :icon="h(DeleteFilled)">删除</a-button>
         </template>
         <template v-if="column.key === 'title'">
           <a>{{ record.title }}</a>
-        </template>
-        <template v-if="column.key === 'isbn'">
-          <a-typography-paragraph :copyable="true">
-            {{ record.isbn }}
-          </a-typography-paragraph>
         </template>
       </template>
 
