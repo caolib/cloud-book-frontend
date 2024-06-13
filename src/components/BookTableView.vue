@@ -39,6 +39,9 @@ let pagination = reactive({
 // 表格数据
 let bookData = ref([]);
 
+// 加载中
+const loading = ref(false);
+
 // 表格列
 const columns = [
   {
@@ -86,6 +89,7 @@ onMounted(async () => {
 
 // 获取图书数据
 const fetchBooks = async () => {
+  loading.value = true;
   // 设置查询条件
   condition.bookName = bookName.value
   condition.isbn = isbn.value
@@ -97,6 +101,7 @@ const fetchBooks = async () => {
   bookData.value = result.data
   pagination.total = result.total
   console.log('搜索结果:' + JSON.stringify(result.data));
+  loading.value = false;
 }
 
 
@@ -138,6 +143,7 @@ const date = ref();
 
 <template>
   <!--数据表格-->
+  <a-spin :spinning="loading">
   <a-table :data-source="bookData" :columns="columns" :scroll="{ y: '800px' }" :style="{marginTop: '10px'}"
            :pagination="{ position: ['bottomCenter'], ...pagination }"
            :row-class-name="(_record, index) => (index % 2 === 1 ? 'table-striped' : null)" bordered>
@@ -200,7 +206,7 @@ const date = ref();
       </div>
     </template>
   </a-table>
-
+  </a-spin>
 
   <!--借阅对话框-->
   <a-modal v-model:open="open" :title="currentBook.title" @ok="borrowBook">

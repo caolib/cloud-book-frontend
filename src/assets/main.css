@@ -17,3 +17,20 @@ blockquote {
 .ant-tag-blue {
     font-size: large;
 }
+
+/* 全局背景色 */
+body {
+    background-color: white;
+}
+
+
+/* 布局背景色 */
+:where(.css-dev-only-do-not-override-n69ulc).ant-layout {
+    background-color: white;
+}
+
+/* 全局颜色 */
+:root {
+    --red: #ff6b6b;
+    --blue: #0084e8;
+}
