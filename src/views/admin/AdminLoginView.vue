@@ -99,16 +99,17 @@ const showModal = (status) => {
       <a-layout-header :style="{ position: 'fixed', zIndex: 1, width: '100%',background: 'transparent' }">
         <a-menu theme="light" mode="horizontal" :style="{ lineHeight: '64px',background: 'transparent' }">
           <a-menu-item>
-            <a-button type="primary" @click="showModal('login')" size="large">用户登录</a-button>
+            <a-button type="primary" @click="showModal('login')" size="large">管理员登录</a-button>
           </a-menu-item>
           <a-menu-item>
-            <a-button type="primary" @click="showModal('register')" size="large">用户注册</a-button>
+            <a-button type="primary" @click="showModal('register')" size="large">管理员注册</a-button>
           </a-menu-item>
           <a-menu-item>
-            <a-button type="primary" size="large" @click="()=>{router.push('/admin/login')}">管理员</a-button>
+            <a-button type="primary" size="large" @click="()=>{router.push('/login')}">读者</a-button>
           </a-menu-item>
           <a-menu-item style="flex-grow: 1; text-align: right;">
-            <h1 style="background: #0000;color: white;font-size: 35px;font-family: '华文行楷',serif;">图书借阅管理系统</h1>
+            <h1 style="background: #0000;color: white;font-size: 35px;font-family: '华文行楷',serif;">
+              图书借阅管理系统</h1>
           </a-menu-item>
         </a-menu>
       </a-layout-header>

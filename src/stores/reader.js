@@ -8,6 +8,7 @@ export const useReaderStore = defineStore('reader', () => {
         let reader = reactive({
             id: '',
             username: '',
+            password: '',
             nickname: '',
             gender: '',
             age: '',

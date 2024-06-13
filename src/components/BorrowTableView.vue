@@ -137,14 +137,16 @@ const returnBook = async (record) => {
   message.success('成功归还书籍:' + record.bookName);
 }
 
+
 </script>
 
 <template>
   <div
-      style="display: flex; justify-content: space-between; align-items: center; height: 100%; background: transparent">
+      style="display: flex; justify-content: space-between; align-items: center; height: 90%; background: transparent">
     <!-- 借阅表格 -->
     <a-spin :spinning="loading">
       <a-table :data-source="borrowData" :columns="columns" :row-key="'id'" :pagination="false"
+               :empty="empty"
                :row-selection="rowSelection" :scroll="{ y: '800px' }" :style="{marginTop: '10px',width:'1200px'}"
                bordered>
         <!--表头-->
@@ -195,7 +197,7 @@ const returnBook = async (record) => {
     <!-- 统计信息 -->
     <div style="display: flex; justify-content: center; align-items: center;flex-direction: column">
       <!-- 圆形进度条 -->
-      <a-progress :percent="(returnedCount*100/totalCount).toFixed(2)" type="circle" :size="400"/>
+      <a-progress :percent="(returnedCount*100/totalCount).toFixed(2)" type="circle" :size="400" :strokeWidth="20"/>
       <!-- 统计信息条 -->
       <div style="display: flex; flex-direction: row; justify-content: space-between;">
         <a-statistic title="已归还" :value="returnedCount" :prefix="h(CheckCircleTwoTone)"
@@ -212,5 +214,9 @@ const returnBook = async (record) => {
 <style scoped>
 .ant-tag {
   font-size: 18px; /* 或者其他你想要的大小 */
+}
+
+body{
+  background-image: none;
 }
 </style>

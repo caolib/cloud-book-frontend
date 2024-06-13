@@ -8,7 +8,7 @@ blockquote {
     margin-top: 16px;
     padding: 10px 10px 10px 20px;
     background: #ffffff;
-    border-left: 5px solid #42a5f5;
+    border-left: 5px solid #166ff3;
     overflow: auto;
     box-shadow: 3px 8px 10px 2px rgb(173 173 173);
 }
@@ -24,7 +24,7 @@ body {
 }
 
 
-/* 布局背景色 */
+/* 布局布局背景色 */
 :where(.css-dev-only-do-not-override-n69ulc).ant-layout {
     background-color: white;
 }
@@ -32,5 +32,17 @@ body {
 /* 全局颜色 */
 :root {
     --red: #ff6b6b;
-    --blue: #0084e8;
+    --blue: #166ff3;
+}
+
+/* 按钮字体 */
+:where(.css-dev-only-do-not-override-1vujmny).ant-btn > span {
+    font-family: '方正楷体', serif, "Microsoft YaHei UI";
+    font-weight: bold;
+    display: inline-block;
+}
+
+/* 背景颜色 */
+:where(.css-dev-only-do-not-override-1vujmny).ant-layout .ant-layout-content {
+    background-color: white;
 }
