@@ -28,7 +28,7 @@ const locale = zhCN;
       :locale="locale"
       :theme="{
       token: {
-        colorPrimary: '#108ee9',
+        colorPrimary: '#166ff3',
         colorError: '#ff6b6b',
         fontFamily:'方正楷体',
         fontSize:16

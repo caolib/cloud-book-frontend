@@ -54,7 +54,13 @@ const columns = [
     title: '作者',
     dataIndex: 'author',
     key: 'author',
-    width: '10%',
+    width: '15%',
+  },
+  {
+    title: '书号',
+    dataIndex: 'isbn',
+    key: 'isbn',
+    width: '15%',
   },
   {
     title: '库存',
@@ -62,12 +68,6 @@ const columns = [
     key: 'number',
     width: '10%',
     sorter: (a, b) => a.number - b.number
-  },
-  {
-    title: '书号',
-    dataIndex: 'isbn',
-    key: 'isbn',
-    width: '15%',
   },
   {
     title: '简介',
@@ -98,9 +98,9 @@ const fetchBooks = async () => {
   condition.pageSize = pagination.pageSize
   // 查询并赋值
   const result = await getAllBookService(condition)
-  bookData.value = result.data
-  pagination.total = result.total
-  console.log('搜索结果:' + JSON.stringify(result.data));
+  bookData.value = result.data;
+  pagination.total = result.total;
+  // console.log('搜索结果:' + JSON.stringify(result.data));
   loading.value = false;
 }
 
@@ -122,8 +122,7 @@ const borrowBook = async () => {
   }
   const borrowDate = dayjs(date.value[0]).format('YYYY-MM-DD').toString();
   const dueDate = dayjs(date.value[1]).format('YYYY-MM-DD').toString();
-  const result = await borrowService2(isbn, borrowDate, dueDate);
-  console.log("result:" + result.data);
+  await borrowService2(isbn, borrowDate, dueDate);
 
   message.success('借阅成功!')
   open.value = false;
@@ -144,68 +143,68 @@ const date = ref();
 <template>
   <!--数据表格-->
   <a-spin :spinning="loading">
-  <a-table :data-source="bookData" :columns="columns" :scroll="{ y: '800px' }" :style="{marginTop: '10px'}"
-           :pagination="{ position: ['bottomCenter'], ...pagination }"
-           :row-class-name="(_record, index) => (index % 2 === 1 ? 'table-striped' : null)" bordered>
-    <!--展开列标题-->
-    <template #expandColumnTitle/>
-    <!--<template #expandColumnTitle>-->
-    <!--  <span><a-tag color="blue">展开</a-tag></span>-->
-    <!--</template>-->
+    <a-table :data-source="bookData" :columns="columns" :scroll="{ y: '800px' }" :style="{marginTop: '10px'}"
+             :pagination="{ position: ['bottomCenter'], ...pagination }"
+             :row-class-name="(_record, index) => (index % 2 === 1 ? 'table-striped' : null)" bordered>
+      <!--展开列标题-->
+      <template #expandColumnTitle/>
+      <!--<template #expandColumnTitle>-->
+      <!--  <span><a-tag color="blue">展开</a-tag></span>-->
+      <!--</template>-->
 
-    <!--表头-->
-    <template #headerCell="{ column }">
-      <!--搜索框-->
-      <div v-if="column.key === 'title'" style="display: flex; align-items: center;">
-        <span><a-tag color="blue">书名</a-tag></span>
-        <a-input v-model:value="bookName" @change="fetchBooks" allow-clear placeholder="书名"
-                 style="margin-left: 8px; width: 100%;"/>
-      </div>
-      <div v-if="column.key === 'author'" style="display: flex; align-items: center;">
-        <span><a-tag color="blue">作者</a-tag></span>
-        <a-input v-model:value="author" @change="fetchBooks" placeholder="作者" allow-clear
-                 style="margin-left: 8px; width: 100%;"/>
-      </div>
-      <div v-if="column.key === 'isbn'" style="display: flex; align-items: center;">
-        <span><a-tag color="blue">书号</a-tag></span>
-        <a-input v-model:value="isbn" @change="fetchBooks" placeholder="书号" allow-clear
-                 style="margin-left: 8px; width: 100%;"/>
-      </div>
+      <!--表头-->
+      <template #headerCell="{ column }">
+        <!--搜索框-->
+        <div v-if="column.key === 'title'" style="display: flex; align-items: center;">
+          <span><a-tag color="blue">书名</a-tag></span>
+          <a-input v-model:value="bookName" @change="fetchBooks" allow-clear placeholder="书名"
+                   style="margin-left: 8px; width: 100%;"/>
+        </div>
+        <div v-if="column.key === 'author'" style="display: flex; align-items: center;">
+          <span><a-tag color="blue">作者</a-tag></span>
+          <a-input v-model:value="author" @change="fetchBooks" placeholder="作者" allow-clear
+                   style="margin-left: 8px; width: 100%;"/>
+        </div>
+        <div v-if="column.key === 'isbn'" style="display: flex; align-items: center;">
+          <span><a-tag color="blue">书号</a-tag></span>
+          <a-input v-model:value="isbn" @change="fetchBooks" placeholder="书号" allow-clear
+                   style="margin-left: 8px; width: 100%;"/>
+        </div>
 
-      <!--默认显示-->
-      <div v-if="column.key === 'number'" style="display: flex; align-items: center;">
-        <span><a-tag color="blue">库存</a-tag></span>
-      </div>
-      <div v-if="column.key === 'action'" style="display: flex; align-items: center;">
-        <span><a-tag color="blue">操作</a-tag></span>
-      </div>
-      <div v-if="column.key === 'introduction'" style="display: flex; align-items: center;">
-        <span><a-tag color="blue">简介</a-tag></span>
-      </div>
-    </template>
-
-    <!--表格内容定义-->
-    <template #bodyCell="{ column,record }">
-      <template v-if="column.key === 'action'">
-        <a-button @click="borrow(record)" type="dashed" :size="large" :icon="h(CheckCircleTwoTone)">借阅</a-button>
+        <!--默认显示-->
+        <div v-if="column.key === 'number'" style="display: flex; align-items: center;">
+          <span><a-tag color="blue">库存</a-tag></span>
+        </div>
+        <div v-if="column.key === 'action'" style="display: flex; align-items: center;">
+          <span><a-tag color="blue">操作</a-tag></span>
+        </div>
+        <div v-if="column.key === 'introduction'" style="display: flex; align-items: center;">
+          <span><a-tag color="blue">简介</a-tag></span>
+        </div>
       </template>
-      <template v-if="column.key === 'title'">
-        <a>{{ record.title }}</a>
-      </template>
-    </template>
 
-    <!-- 展开内容定义 -->
-    <template #expandedRowRender="{ record }">
-      <div>
-        <!--图片-->
-        <img :src="record.cover" alt="cover" style="width: 100px; height: 150px">
-        <!--介绍-->
-        <a-typography-paragraph>
-          <pre>{{ record.introduction }}</pre>
-        </a-typography-paragraph>
-      </div>
-    </template>
-  </a-table>
+      <!--表格内容定义-->
+      <template #bodyCell="{ column,record }">
+        <template v-if="column.key === 'action'">
+          <a-button @click="borrow(record)" type="dashed" :size="large" :icon="h(CheckCircleTwoTone)">借阅</a-button>
+        </template>
+        <template v-if="column.key === 'title'">
+          <a>{{ record.title }}</a>
+        </template>
+      </template>
+
+      <!-- 展开内容定义 -->
+      <template #expandedRowRender="{ record }">
+        <div>
+          <!--图片-->
+          <img :src="record.cover" alt="cover" style="width: 100px; height: 150px">
+          <!--介绍-->
+          <a-typography-paragraph>
+            <pre>{{ record.introduction }}</pre>
+          </a-typography-paragraph>
+        </div>
+      </template>
+    </a-table>
   </a-spin>
 
   <!--借阅对话框-->

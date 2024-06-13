@@ -12,6 +12,7 @@ const readerStore = useReaderStore();
 let returnReader = reactive({
   id: "",
   username: "",
+  password: "",
   nickname: "",
   gender: "",
   age: "",
@@ -29,42 +30,15 @@ const login = async function () {
 
   loginService(loginDto).then(async (res) => {
     returnReader = res.data;
+    returnReader.password = loginDto.password;
     message.success("用户 " + res.data.nickname + " 登录成功!", 3);
     // 保存用户信息和token
     readerStore.setReader(returnReader);
-    console.log("returnReader:" + returnReader.token);
+    console.log("returnReader:" + JSON.stringify(returnReader));
     await router.push("/home");
     location.reload();
   });
 
-  // 显示加载中动画
-  // const loading = ElLoading.service({
-  //   lock: true,
-  //   text: '长时间加载请刷新页面......',
-  //   background: 'rgba(0, 0, 0, 0.7)',
-  // })
-
-  // const result = await loginService(loginDto.value);
-  // returnReader = result.data;
-
-  // console.log(returnReader);
-
-  //保存用户信息和token
-  // readerStore.setReader(returnReader);
-  // tokenStore.setToken(returnReader.token);
-  // adminStore.setIsAdmin(false);
-
-  // 关闭动画
-  // loading.close();
-
-  // console.log("tokenStore:" + tokenStore.token);
-
-  // await router.push("/book");
-  // ElNotification.success({
-  //   title: "登录成功",
-  //   message: "Hello," + returnReader.nickname,
-  //   duration: 1500,
-  // });
 };
 
 

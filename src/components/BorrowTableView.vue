@@ -195,7 +195,7 @@ const returnBook = async (record) => {
     <!-- 统计信息 -->
     <div style="display: flex; justify-content: center; align-items: center;flex-direction: column">
       <!-- 圆形进度条 -->
-      <a-progress :percent="(returnedCount*100/totalCount).toFixed(2)" type="circle" :size="400"/>
+      <a-progress :percent="(returnedCount*100/totalCount).toFixed(2)" type="circle" :size="400" :strokeWidth="20"/>
       <!-- 统计信息条 -->
       <div style="display: flex; flex-direction: row; justify-content: space-between;">
         <a-statistic title="已归还" :value="returnedCount" :prefix="h(CheckCircleTwoTone)"
