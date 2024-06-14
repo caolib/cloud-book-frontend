@@ -239,7 +239,7 @@ const add = async () => {
         </a-form-item>
         <!-- 库存 -->
         <a-form-item label="库存" name="number" :rules="[{ required: true, message: '请输入库存' }]">
-          <a-input v-model:value="addBook.number"/>
+          <a-input-number v-model:value="addBook.number" max="999999999" style="width: 100%;"/>
         </a-form-item>
         <!-- 作者 -->
         <a-form-item label="作者" name="author" :rules="[{ message: '请输入作者' }]">

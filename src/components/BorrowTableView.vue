@@ -146,12 +146,10 @@ const returnBook = async (record) => {
     <!-- 借阅表格 -->
     <a-spin :spinning="loading">
       <a-table :data-source="borrowData" :columns="columns" :row-key="'id'" :pagination="false"
-               :empty="empty"
                :row-selection="rowSelection" :scroll="{ y: '800px' }" :style="{marginTop: '10px',width:'1200px'}"
                bordered>
         <!--表头-->
         <template #headerCell="{ column }">
-          <!--搜索框-->
           <div v-if="column.key === 'bookName'" style="display: flex; align-items: center;">
             <span><a-tag color="blue">书名</a-tag></span>
           </div>
@@ -213,7 +211,7 @@ const returnBook = async (record) => {
 
 <style scoped>
 .ant-tag {
-  font-size: 18px; /* 或者其他你想要的大小 */
+  font-size: 18px; /* 标签字体大小 */
 }
 
 body{
