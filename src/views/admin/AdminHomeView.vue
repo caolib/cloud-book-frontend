@@ -3,6 +3,7 @@
 import {ref} from 'vue';
 import {adminLogoutService} from "@/api/logout.js";
 import AdminBookView from "@/components/admin/AdminBookView.vue";
+import AdminInfoView from "@/components/admin/AdminInfoView.vue";
 
 const selectedKeys = ref(["1"]);
 
@@ -42,7 +43,7 @@ const logout = async () => {
       <admin-book-view v-if="selectedKeys[0] === '1'" :style="{marginTop: '50px'}"/>
       <!--&lt;!&ndash; 借阅记录表格 &ndash;&gt;-->
       <!--<borrow-table-view v-if="selectedKeys[0] === '2'" :style="{marginTop: '20px'}"/>-->
-      <!--<user-info-view v-if="selectedKeys[0] === '3'" :style="{marginTop: '20px'}"/>-->
+      <admin-info-view v-if="selectedKeys[0] === '3'" :style="{marginTop: '20px'}"/>
     </a-layout-content>
   </a-layout>
 </template>

@@ -32,29 +32,19 @@ const loading = ref(false);
 // 用户登录
 const login = async function () {
   loading.value = true;
-  // 5秒超时
-  const timeout = new Promise((reject) => {
-    setTimeout(() => {
-      reject(new Error('登录超时！'));
-    }, 5000);
+  loginService(loginDto).then(async (res) => {
+    returnReader = res.data;
+    returnReader.password = loginDto.password;
+    message.success("hello," + res.data.nickname, 3);
+    // 保存用户信息和token
+    readerStore.setReader(returnReader);
+    // console.log("returnReader:" + JSON.stringify(returnReader));
+    loading.value = false;
+    await router.push("/home");
+  }).catch((error) => {
+    loading.value = false;
+    console.log(error);
   });
-  // 登录
-  Promise.race([loginService(loginDto), timeout])
-      .then(async (res) => {
-        returnReader = res.data;
-        returnReader.password = loginDto.password;
-        message.success("hello," + res.data.nickname, 3);
-        // 保存用户信息和token
-        readerStore.setReader(returnReader);
-        // console.log("returnReader:" + JSON.stringify(returnReader));
-        loading.value = false;
-        await router.push("/home");
-      })
-      .catch((error) => {
-        loading.value = false;
-        message.error("登录超时！", 3);
-        console.log(error);
-      });
 };
 
 // 注册
@@ -108,7 +98,8 @@ const showModal = (status) => {
             <a-button type="primary" size="large" @click="()=>{router.push('/admin/login')}">管理员</a-button>
           </a-menu-item>
           <a-menu-item style="flex-grow: 1; text-align: right;">
-            <h1 style="background: #0000;color: white;font-size: 35px;font-family: '华文行楷',serif;">图书借阅管理系统</h1>
+            <h1 style="background: #0000;color: white;font-size: 35px;font-family: '华文行楷',serif;">
+              图书借阅管理系统</h1>
           </a-menu-item>
         </a-menu>
       </a-layout-header>

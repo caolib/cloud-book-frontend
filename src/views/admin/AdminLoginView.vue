@@ -29,29 +29,18 @@ const loading = ref(false);
 
 // 管理员登录
 const login = async function () {
-  loading.value = true;
-  // 5秒超时
-  const timeout = new Promise((reject) => {
-    setTimeout(() => {
-      reject(new Error('登录超时！'));
-    }, 5000);
+  adminLoginService(loginDto).then(async (res) => {
+    returnAdmin = res.data;
+    returnAdmin.password = loginDto.password;
+    message.success("hello," + res.data.nickname, 3);
+    // 保存用户信息和token
+    adminStore.setAdmin(returnAdmin);
+    loading.value = false;
+    await router.push("/admin/home");
+  }).catch((error) => {
+    loading.value = false;
+    console.log(error);
   });
-  // 登录
-  Promise.race([adminLoginService(loginDto), timeout])
-      .then(async (res) => {
-        returnAdmin = res.data;
-        returnAdmin.password = loginDto.password;
-        message.success("hello," + res.data.nickname, 3);
-        // 保存用户信息和token
-        adminStore.setAdmin(returnAdmin);
-        loading.value = false;
-        await router.push("/admin/home");
-      })
-      .catch((error) => {
-        loading.value = false;
-        message.error("登录超时！", 3);
-        console.log(error);
-      });
 };
 
 // 注册
