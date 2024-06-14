@@ -1,9 +1,8 @@
 <script setup>
 import {h, onMounted, reactive, ref} from 'vue';
-import {deleteBookService, getAllBookService} from "@/api/book.js";
-import {DeleteFilled} from "@ant-design/icons-vue";
+import {addBookService, deleteBookService, getAllBookService, updateBookService} from "@/api/book.js";
+import {DeleteFilled, SaveTwoTone, PlusCircleTwoTone} from "@ant-design/icons-vue";
 import {message} from "ant-design-vue";
-import dayjs from "dayjs";
 
 const large = ref('large')
 
@@ -53,7 +52,7 @@ const columns = [
     title: '作者',
     dataIndex: 'author',
     key: 'author',
-    width: '15%',
+    width: '10%',
   },
   {
     title: '书号',
@@ -65,19 +64,19 @@ const columns = [
     title: '库存',
     dataIndex: 'number',
     key: 'number',
-    width: '10%',
+    width: '8%',
     sorter: (a, b) => a.number - b.number
   },
   {
     title: '简介',
     dataIndex: 'introduction',
     key: 'introduction',
-    width: '30%',
     ellipsis: true,
   },
   {
     title: '操作',
     key: 'action',
+    width: '15%',
   },
 ];
 
@@ -103,8 +102,6 @@ const fetchBooks = async () => {
   loading.value = false;
 }
 
-const open = ref(false);
-
 // 删除图书
 const deleteBook = async (record) => {
   const isbn = record.isbn;
@@ -113,15 +110,36 @@ const deleteBook = async (record) => {
   await fetchBooks();
 }
 
-// 当前图书
-const currentBook = ref({})
+// 修改图书信息
+const updateBook = async (record) => {
+  console.log('修改图书信息:' + JSON.stringify(record));
+  await updateBookService(record);
+  message.success('保存成功!');
+  await fetchBooks();
+}
 
-// 只能选择今天之后的日期
-const disabledDate = (current) => {
-  return current && current < dayjs().endOf('day');
-};
-const date = ref();
+// 添加书籍
+let show = ref(false);
+const showAdd = () => {
+  show.value = true;
+}
 
+const addBook = reactive({
+  title: null,
+  isbn: null,
+  cover: null,
+  introduction: null,
+  number: null,
+  author: null
+})
+
+// 添加
+const add = async () => {
+  console.log('添加书籍:' + JSON.stringify(addBook));
+  await addBookService(addBook);
+  show.value = false;
+  await fetchBooks();
+}
 
 </script>
 
@@ -132,9 +150,9 @@ const date = ref();
              :pagination="{ position: ['bottomCenter'], ...pagination }"
              :row-class-name="(_record, index) => (index % 2 === 1 ? 'table-striped' : null)" bordered>
       <template #expandColumnTitle/>
-      <!--表头-->
+      <!--表头自定义-->
       <template #headerCell="{ column }">
-        <!--搜索框-->
+        <!--增加搜索框的表头-->
         <div v-if="column.key === 'title'" style="display: flex; align-items: center;">
           <span><a-tag color="blue">书名</a-tag></span>
           <a-input v-model:value="bookName" @change="fetchBooks" allow-clear placeholder="书名"
@@ -151,25 +169,45 @@ const date = ref();
                    style="margin-left: 8px; width: 100%;"/>
         </div>
 
-        <!--默认显示-->
+        <!--无搜索框-->
         <div v-if="column.key === 'number'" style="display: flex; align-items: center;">
           <span><a-tag color="blue">库存</a-tag></span>
         </div>
         <div v-if="column.key === 'action'" style="display: flex; align-items: center;">
           <span><a-tag color="blue">操作</a-tag></span>
+          <a-button @click="showAdd" type="dashed" :icon="h(PlusCircleTwoTone)" style="margin-left: 20px">添加
+          </a-button>
         </div>
         <div v-if="column.key === 'introduction'" style="display: flex; align-items: center;">
           <span><a-tag color="blue">简介</a-tag></span>
         </div>
       </template>
 
-      <!--表格内容定义-->
+      <!--表格内容自定义-->
       <template #bodyCell="{ column,record }">
-        <template v-if="column.key === 'action'">
-          <a-button @click="deleteBook(record)" type="dashed" :size="large" danger :icon="h(DeleteFilled)">删除</a-button>
-        </template>
+        <!--书名-->
         <template v-if="column.key === 'title'">
-          <a>{{ record.title }}</a>
+          <a-typography-paragraph v-model:content="record.title" editable/>
+        </template>
+        <!--作者-->
+        <template v-if="column.key === 'author'">
+          <a-typography-paragraph v-model:content="record.author" editable/>
+        </template>
+        <!--书号-->
+        <template v-if="column.key === 'isbn'">
+          <a-typography-paragraph v-model:content="record.isbn" copyable/>
+        </template>
+        <!--库存-->
+        <template v-if="column.key === 'number'">
+          <a-typography-paragraph v-model:content="record.number" editable/>
+        </template>
+        <!--操作栏按钮-->
+        <template v-if="column.key === 'action'">
+          <a-button @click="updateBook(record)" type="dashed" :size="large" :icon="h(SaveTwoTone)"
+                    style="margin-right: 20px">保存
+          </a-button>
+          <a-button @click="deleteBook(record)" type="dashed" :size="large" danger :icon="h(DeleteFilled)">删除
+          </a-button>
         </template>
       </template>
 
@@ -178,21 +216,44 @@ const date = ref();
         <div>
           <!--图片-->
           <img :src="record.cover" alt="cover" style="width: 100px; height: 150px">
+          <a-typography-paragraph v-model:content="record.cover" editable copyable/>
           <!--介绍-->
-          <a-typography-paragraph>
-            <pre>{{ record.introduction }}</pre>
-          </a-typography-paragraph>
+          <a-typography-paragraph v-model:content="record.introduction" editable/>
         </div>
       </template>
     </a-table>
   </a-spin>
 
-  <!--借阅对话框-->
-  <a-modal v-model:open="open" :title="currentBook.title" @ok="borrowBook">
-    <div style="{display: flex;flex-direction: column; align-items: center}">
-      <img :src="currentBook.cover" alt="cover" style="width: 100px; height: 150px;margin: 10px">
-      <blockquote>{{ currentBook.introduction }}</blockquote>
-      <a-range-picker v-model:value="date" :disabled-date="disabledDate"/>
+  <!-- 添加对话框 -->
+  <a-modal v-model:open="show" title="添加书籍" :confirm-loading="loading" @ok="add">
+    <div :style="{padding:'20px'}">
+      <!-- 添加书籍表单 -->
+      <a-form :model="addBook">
+        <!-- 书名 -->
+        <a-form-item label="书名" name="title" :rules="[{ required: true, message: '请输入书名' }]">
+          <a-input v-model:value="addBook.title"/>
+        </a-form-item>
+        <!-- 书号 -->
+        <a-form-item label="书号" name="isbn" :rules="[{ required: true, message: '请输入书号' }]">
+          <a-input v-model:value="addBook.isbn"/>
+        </a-form-item>
+        <!-- 库存 -->
+        <a-form-item label="库存" name="number" :rules="[{ required: true, message: '请输入库存' }]">
+          <a-input v-model:value="addBook.number"/>
+        </a-form-item>
+        <!-- 作者 -->
+        <a-form-item label="作者" name="author" :rules="[{ message: '请输入作者' }]">
+          <a-input v-model:value="addBook.author"/>
+        </a-form-item>
+        <!-- 简介 -->
+        <a-form-item label="简介" name="introduction" :rules="[{message: '请输入简介' }]">
+          <a-input v-model:value="addBook.introduction"/>
+        </a-form-item>
+        <!-- 封面 -->
+        <a-form-item label="封面" name="cover" :rules="[{message: '请输入封面' }]">
+          <a-input v-model:value="addBook.cover"/>
+        </a-form-item>
+      </a-form>
     </div>
   </a-modal>
 

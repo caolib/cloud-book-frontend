@@ -25,7 +25,7 @@ const logout = async () => {
           <a-button type="primary" ghost size="large">图书</a-button>
         </a-menu-item>
         <a-menu-item key="2">
-          <a-button type="primary" ghost size="large">借阅</a-button>
+          <a-button type="primary" ghost size="large">读者</a-button>
         </a-menu-item>
         <a-menu-item key="3">
           <a-button type="primary" ghost size="large">我的</a-button>
