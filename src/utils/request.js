@@ -4,7 +4,6 @@ import {useReaderStore} from "@/stores/reader.js";
 import {useAdminStore} from "@/stores/admin.js";
 
 import {message} from "ant-design-vue";
-import {ref} from "vue";
 
 
 const baseURL = "/api";
@@ -31,12 +30,12 @@ instance.interceptors.response.use(
                 message.error('请先登录！');
                 router.push('/login');
                 break;
-            case 419:
-                message.error('身份已过期,请重新登录！');
+            case 499:
+                message.error('身份过期,请重新登录！');
                 router.push('/login');
                 break;
             case 500:
-                message.error('服务器异常！');
+                message.error('服务器繁忙！');
                 console.log(error.response.message)
                 break;
             default:

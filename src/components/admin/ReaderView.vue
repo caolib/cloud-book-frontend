@@ -18,7 +18,7 @@ const columns = [
     title: '用户名',
     dataIndex: 'username',
     key: 'username',
-    width: 'auto'
+    width: '20%'
   },
   {
     title: '密码',
@@ -30,13 +30,13 @@ const columns = [
     title: '电话',
     dataIndex: 'tel',
     key: 'tel',
-    width: 'auto'
+    width: '20%'
   },
   {
     title: '昵称',
     dataIndex: 'nickname',
     key: 'nickname',
-    width: 'auto'
+    width: '20%'
   },
   {
     title: '性别',
@@ -99,17 +99,17 @@ const large = ref('large')
         <!--带搜索框的表头-->
         <div v-if="column.key === 'username'" style="display: flex; align-items: center;">
           <span><a-tag color="blue">用户名</a-tag></span>
-          <a-input v-model:value="condition.username" @change="fetchReaders" allow-clear placeholder="书名"
+          <a-input v-model:value="condition.username" @change="fetchReaders" allow-clear placeholder="用户名"
                    style="margin-left: 8px; width: 100%;" />
         </div>
         <div v-if="column.key === 'nickname'" style="display: flex; align-items: center;">
           <span><a-tag color="blue">昵称</a-tag></span>
-          <a-input v-model:value="condition.nickname" @change="fetchReaders" placeholder="作者" allow-clear
+          <a-input v-model:value="condition.nickname" @change="fetchReaders" placeholder="昵称" allow-clear
                    style="margin-left: 8px; width: 100%;" />
         </div>
         <div v-if="column.key === 'tel'" style="display: flex; align-items: center;">
           <span><a-tag color="blue">电话</a-tag></span>
-          <a-input v-model:value="condition.tel" @change="fetchReaders" placeholder="书号" allow-clear
+          <a-input v-model:value="condition.tel" @change="fetchReaders" placeholder="电话" allow-clear
                    style="margin-left: 8px; width: 100%;" />
         </div>
       </template>
@@ -130,7 +130,10 @@ const large = ref('large')
         </template>
         <!--性别-->
         <template v-if="column.key === 'gender'">
-          <a-typography-paragraph v-model:content="record.gender" editable />
+          <a-select v-model:value="record.gender">
+            <a-select-option value="男">男</a-select-option>
+            <a-select-option value="女">女</a-select-option>
+          </a-select>
         </template>
         <!--操作栏按钮-->
         <template v-if="column.key === 'action'">

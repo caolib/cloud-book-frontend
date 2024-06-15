@@ -64,7 +64,8 @@ const register = async () => {
     message.success("注册成功,可以登录了！", 3);
     showModal("login")
   }).catch(() => {
-    message.error("注册失败！", 3);
+    // message.error("注册失败！", 3);
+    console.log("注册失败！");
   });
 };
 
