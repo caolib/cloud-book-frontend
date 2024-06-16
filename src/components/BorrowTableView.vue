@@ -33,8 +33,6 @@ const fetchBorrows = async () => {
   returnedCount.value = borrowData.value.filter(borrow => borrow.status).length;
   totalCount.value = borrowData.value.length;
   notReturnedCount.value = totalCount.value - returnedCount.value;
-  // console.log('borrow:' + JSON.stringify(borrowData.value));
-  // message.success(returnedCount.value)
 }
 
 
@@ -87,34 +85,32 @@ let selectedRowKeys = ref([]);
 const onSelectChange = (selectedKeys) => {
   selectedRowKeys.value = [...selectedKeys];
   let key = 'batchDelete';
+  // 没有选中行删除通知
   if (selectedRowKeys.value.length === 0) {
     notification.close(key)
     return;
   }
+  // 有选中行弹出通知
   notification.open({
     key: key,
     message: '批量删除借阅记录' + selectedRowKeys.value.length + '条',
     description: "全部删除后将无法恢复，是否继续？",
     duration: 5,
-    btn: () =>
-        h(Button,
-            {
-              danger: true,
-              size: 'large',
-              onClick: async () => {
-                await deleteBorrowBatchService(selectedRowKeys.value);
-                message.success('成功删除');
-                await fetchBorrows();
-                notification.close(key)
-              }
-            },
-            () => '确认删除',
-        ),
-    onClose: close
+    btn: () => h(Button, {
+          danger: true,
+          size: 'large',
+          onClick: async () => {
+            await deleteBorrowBatchService(selectedRowKeys.value);
+            message.success('删除成功');
+            await fetchBorrows();
+            notification.close(key)
+          }
+        }, () => '确认删除',
+    ), onClose: close
   });
 };
 
-// 行多选
+// 行多选属性
 const rowSelection = ref({
   selectedRowKeys: selectedRowKeys,
   onChange: onSelectChange,
@@ -137,7 +133,6 @@ const returnBook = async (record) => {
   message.success('成功归还书籍:' + record.bookName);
 }
 
-
 </script>
 
 <template>
@@ -148,7 +143,7 @@ const returnBook = async (record) => {
       <a-table :data-source="borrowData" :columns="columns" :row-key="'id'" :pagination="false"
                :row-selection="rowSelection" :scroll="{ y: '800px' }" :style="{marginTop: '10px',width:'1200px'}"
                bordered>
-        <!--表头-->
+        <!--表头自定义，修改为标签-->
         <template #headerCell="{ column }">
           <div v-if="column.key === 'bookName'" style="display: flex; align-items: center;">
             <span><a-tag color="blue">书名</a-tag></span>
@@ -172,19 +167,20 @@ const returnBook = async (record) => {
 
         <!--表格内容定义-->
         <template #bodyCell="{ column,record }">
+          <!--操作栏按钮-->
           <template v-if="column.key === 'action'">
             <a-button v-if="record.status" @click="deleteBorrow(record)" type="dashed" danger :size="large"
-                      :icon="h(DeleteOutlined)">
-              删除
+                      :icon="h(DeleteOutlined)">删除
             </a-button>
             <a-button v-else @click="returnBook(record)" type="dashed" :size="large" :icon="h(CheckCircleTwoTone)">
               归还
             </a-button>
           </template>
+          <!--书名-->
           <template v-if="column.key === 'bookName'">
             <a>{{ record.bookName }}</a>
           </template>
-
+          <!--状态标签-->
           <template v-if="column.key === 'status'">
             <a-tag v-if="record.status" color="green">已归还</a-tag>
             <a-tag v-else color="red">未归还</a-tag>
@@ -214,7 +210,7 @@ const returnBook = async (record) => {
   font-size: 18px; /* 标签字体大小 */
 }
 
-body{
+body {
   background-image: none;
 }
 </style>

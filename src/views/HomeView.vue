@@ -46,10 +46,6 @@ const logout = async () => {
       <user-info-view v-if="selectedKeys[0] === '3'" :style="{marginTop: '20px'}"/>
     </a-layout-content>
 
-    <!-- 底部 -->
-    <!--<a-layout-footer :style="{ textAlign: 'center' }">-->
-    <!--  我不是源神-->
-    <!--</a-layout-footer>-->
   </a-layout>
 </template>
 

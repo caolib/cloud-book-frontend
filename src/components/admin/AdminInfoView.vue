@@ -7,8 +7,9 @@ import {updateAdminService} from "@/api/admin.js";
 const adminStore = useAdminStore();
 let admin = adminStore.admin;
 
-console.log(JSON.stringify(admin));
+// console.log(JSON.stringify(admin));
 
+// 更新管理员信息
 const updateAdmin = async () => {
   console.log(JSON.stringify(admin));
   await updateAdminService(admin);
@@ -28,7 +29,7 @@ const updateAdmin = async () => {
       <a-input allow-clear v-model:value="admin.nickname" show-count :maxlength="16"/>
     </a-descriptions-item>
     <a-descriptions-item label="令牌">
-      <a-typography-paragraph :copyable="true">
+      <a-typography-paragraph copyable>
         {{ admin.token }}
       </a-typography-paragraph>
     </a-descriptions-item>

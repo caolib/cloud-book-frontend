@@ -4,7 +4,9 @@ import router from "@/router/index.js";
 import {useReaderStore} from "@/stores/reader.js";
 import {useAdminStore} from "@/stores/admin.js";
 
-// 用户退出登录
+/**
+ * 用户退出登录
+ */
 const logoutService = async function () {
     const readerStore = useReaderStore();
     // 调用后端接口清除redis中的令牌
@@ -16,6 +18,9 @@ const logoutService = async function () {
     return result;
 }
 
+/**
+ * 管理员退出登录
+ */
 const adminLogoutService = async function () {
     const adminStore = useAdminStore();
     // 调用后端接口清除redis中的令牌

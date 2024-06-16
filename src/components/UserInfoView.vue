@@ -9,6 +9,7 @@ const readerStore = useReaderStore();
 let reader = readerStore.reader;
 console.log(JSON.stringify(reader));
 
+// 更新用户信息
 const updateReader = async () => {
   await updateReaderService(reader)
   message.success('保存成功')
@@ -39,7 +40,7 @@ const updateReader = async () => {
       </a-select>
     </a-descriptions-item>
     <a-descriptions-item label="令牌">
-      <a-typography-paragraph :copyable="true">
+      <a-typography-paragraph copyable>
         {{ reader.token }}
       </a-typography-paragraph>
     </a-descriptions-item>

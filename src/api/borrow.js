@@ -5,25 +5,23 @@ const getBorrowByReaderIdService = function () {
     return request.get('/borrow');
 };
 
-//借书
-const borrowService = function (isbn, dueDate) {
-    return request.get('/borrow/borrowBook', {
+/**
+ * 借书
+ * @param isbn 书号
+ * @param borrowDate 借书日期
+ * @param dueDate 归还日期
+ */
+const borrowService2 = function (isbn, borrowDate, dueDate) {
+    return request.get('/borrow/borrow2', {
         params: {
             isbn: isbn,
+            borrowDate: borrowDate,
             dueDate: dueDate
         }
     });
 };
 
-const borrowService2 = function (isbn, borrowDate,dueDate) {
-    return request.get('/borrow/borrow2', {
-        params: {
-            isbn: isbn,
-            borrowDate:borrowDate,
-            dueDate: dueDate
-        }
-    });
-};
+
 /**
  * 归还书籍
  * @param id 借阅号
@@ -39,16 +37,34 @@ const returnBookService = function (id, isbn) {
     });
 };
 
-// 删除借书记录
+/**
+ * 删除借阅记录
+ * @param id 借阅号
+ */
 const deleteByIdService = function (id) {
     return request.delete('/borrow', {
         params: {id: id},
     });
 };
 
-//批量删除借阅记录
+/**
+ * 批量删除借阅记录
+ * @param ids 借阅号数组
+ */
 const deleteBorrowBatchService = function (ids) {
     return request.post('/borrow/batch', ids);
+};
+
+/**
+ * 借书 已废弃(只有归还日期，借阅日期默认为当前日期)
+ */
+const borrowService = function (isbn, dueDate) {
+    return request.get('/borrow/borrowBook', {
+        params: {
+            isbn: isbn,
+            dueDate: dueDate
+        }
+    });
 };
 
 export {

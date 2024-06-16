@@ -4,6 +4,7 @@ import {addBookService, deleteBookService, getAllBookService, updateBookService}
 import {DeleteFilled, SaveTwoTone, PlusCircleTwoTone} from "@ant-design/icons-vue";
 import {message} from "ant-design-vue";
 
+// 按钮大小
 const large = ref('large')
 
 // 查询条件
@@ -80,7 +81,7 @@ const columns = [
   },
 ];
 
-// 页面加载时获取表格数据
+// 生命周期钩子
 onMounted(async () => {
   await fetchBooks()
 });
@@ -124,6 +125,7 @@ const showAdd = () => {
   show.value = true;
 }
 
+// 添加书籍对象
 const addBook = reactive({
   title: null,
   isbn: null,
@@ -133,7 +135,7 @@ const addBook = reactive({
   author: null
 })
 
-// 添加
+// 添加书籍
 const add = async () => {
   console.log('添加书籍:' + JSON.stringify(addBook));
   await addBookService(addBook);
@@ -168,8 +170,7 @@ const add = async () => {
           <a-input v-model:value="isbn" @change="fetchBooks" placeholder="书号" allow-clear
                    style="margin-left: 8px; width: 100%;"/>
         </div>
-
-        <!--无搜索框-->
+        <!--有标签，无搜索框-->
         <div v-if="column.key === 'number'" style="display: flex; align-items: center;">
           <span><a-tag color="blue">库存</a-tag></span>
         </div>
@@ -183,7 +184,7 @@ const add = async () => {
         </div>
       </template>
 
-      <!--表格内容自定义-->
+      <!--表格内容自定义，可复制、可编辑-->
       <template #bodyCell="{ column,record }">
         <!--书名-->
         <template v-if="column.key === 'title'">

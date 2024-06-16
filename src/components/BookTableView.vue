@@ -111,6 +111,8 @@ const borrow = (record) => {
   console.log(record);
   open.value = true;
 };
+
+// 借阅对话框显示控制
 const open = ref(false);
 
 // 借阅图书
@@ -135,8 +137,9 @@ const currentBook = ref({})
 const disabledDate = (current) => {
   return current && current < dayjs().endOf('day');
 };
-const date = ref();
 
+// 日期
+const date = ref();
 
 </script>
 
@@ -183,13 +186,15 @@ const date = ref();
       <!--表格内容定义-->
       <template #bodyCell="{ column,record }">
         <template v-if="column.key === 'action'">
-          <a-button @click="borrow(record)" type="dashed" :size="large" :icon="h(CheckCircleTwoTone)">借阅</a-button>
+          <a-button @click="borrow(record)" type="dashed" :size="large" :icon="h(CheckCircleTwoTone)">
+            借阅
+          </a-button>
         </template>
         <template v-if="column.key === 'title'">
           <a>{{ record.title }}</a>
         </template>
         <template v-if="column.key === 'isbn'">
-          <a-typography-paragraph :copyable="true">
+          <a-typography-paragraph copyable>
             {{ record.isbn }}
           </a-typography-paragraph>
         </template>

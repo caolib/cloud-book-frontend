@@ -4,9 +4,7 @@ import {RouterView} from 'vue-router'
 import zhCN from 'ant-design-vue/es/locale/zh_CN';
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
-
 dayjs.locale('zh-cn');
-
 const locale = zhCN;
 
 </script>
@@ -23,7 +21,6 @@ const locale = zhCN;
       }
     }">
     <RouterView/>
-    <a-back-top tooltip="回到顶部"/>
   </a-config-provider>
 </template>
 
