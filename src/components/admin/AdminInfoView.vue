@@ -1,5 +1,5 @@
 <script setup>
-
+import {ref} from "vue";
 import {message} from "ant-design-vue";
 import {useAdminStore} from "@/stores/admin.js";
 import {updateAdminService} from "@/api/admin.js";
@@ -9,11 +9,15 @@ let admin = adminStore.admin;
 
 // console.log(JSON.stringify(admin));
 
+const loading = ref(false);
+
 // 更新管理员信息
 const updateAdmin = async () => {
+  loading.value = true;
   console.log(JSON.stringify(admin));
   await updateAdminService(admin);
   message.success('保存成功')
+  loading.value = false;
 }
 
 </script>
@@ -34,7 +38,7 @@ const updateAdmin = async () => {
       </a-typography-paragraph>
     </a-descriptions-item>
     <a-descriptions-item>
-      <a-button type="primary" @click="updateAdmin">保存</a-button>
+      <a-button type="primary" :loading="loading" @click="updateAdmin">保存</a-button>
     </a-descriptions-item>
   </a-descriptions>
 </template>
