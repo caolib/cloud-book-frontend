@@ -6,7 +6,7 @@ import {useAdminStore} from "@/stores/admin.js";
 import {message} from "ant-design-vue";
 
 
-const baseURL = "/api";
+const baseURL = "https://mock.apipark.cn/m1/4171337-3811142-default";
 // const baseURL = "http://localhost:10086/";
 const instance = axios.create({baseURL});
 
