@@ -17,7 +17,7 @@ const locale = zhCN;
         colorPrimary: '#166ff3',
         colorError: '#ff6b6b',
         fontFamily:'方正楷体',
-        fontSize:16
+        fontSize:12
       }
     }">
     <RouterView/>

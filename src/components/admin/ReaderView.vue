@@ -1,8 +1,8 @@
 <script setup>
-import {deleteReaderService, getAllReaderService, updateReaderService} from '@/api/reader.js'
-import {h, onMounted, reactive, ref} from 'vue'
-import {DeleteFilled, SaveTwoTone, SyncOutlined} from '@ant-design/icons-vue'
-import {message} from 'ant-design-vue'
+import { deleteReaderService, getAllReaderService, updateReaderService } from '@/api/reader.js'
+import { h, onMounted, reactive, ref } from 'vue'
+import { DeleteFilled, SaveTwoTone, SyncOutlined } from '@ant-design/icons-vue'
+import { message } from 'ant-design-vue'
 
 // 查询条件
 const condition = reactive({
@@ -91,36 +91,38 @@ const large = ref('large')
 <template>
   <!-- 借阅表格 -->
   <a-spin :spinning="loading">
-    <a-table
-        :data-source="readerData"
-        :columns="columns"
-        :pagination="false"
-        :scroll="{ y: '800px' }"
-        :style="{ marginTop: '10px', width: '1200px' }"
-        bordered>
+    <a-table :data-source="readerData" :columns="columns" :pagination="false"
+             :scroll="{ y: '65vh' }" :style="{ width: '95vw' }" bordered>
       <!--表头-->
       <template #headerCell="{ column }">
         <!--带搜索框的表头-->
         <div v-if="column.key === 'username'" style="display: flex; align-items: center">
           <span><a-tag color="blue">用户名</a-tag></span>
           <a-input v-model:value="condition.username" @change="fetchReaders" allow-clear placeholder="用户名"
-                   style="margin-left: 8px; width: 100%"/>
+                   style="margin-left: 8px; width: 100%" />
         </div>
         <div v-if="column.key === 'nickname'" style="display: flex; align-items: center">
           <span><a-tag color="blue">昵称</a-tag></span>
           <a-input v-model:value="condition.nickname" @change="fetchReaders" placeholder="昵称" allow-clear
-                   style="margin-left: 8px; width: 100%"/>
+                   style="margin-left: 8px; width: 100%" />
+        </div>
+
+        <div v-if="column.key === 'password'" style="display: flex; align-items: center">
+          <span><a-tag color="blue">密码</a-tag></span>
+        </div>
+        <div v-if="column.key === 'gender'" style="display: flex; align-items: center">
+          <span><a-tag color="blue">性别</a-tag></span>
         </div>
         <div v-if="column.key === 'tel'" style="display: flex; align-items: center">
           <span><a-tag color="blue">电话</a-tag></span>
           <a-input v-model:value="condition.tel" @change="fetchReaders" placeholder="电话" allow-clear
-                   style="margin-left: 8px; width: 100%"/>
+                   style="margin-left: 8px; width: 100%" />
         </div>
         <!-- 操作列表头增加刷新按钮 -->
         <div v-if="column.key === 'action'" style="display: flex; align-items: center">
           <span><a-tag color="blue">操作</a-tag></span>
           <a-button style="margin-left: 10px" @click="fetchReaders" type="dashed">刷新
-            <sync-outlined spin/>
+            <sync-outlined spin />
           </a-button>
         </div>
       </template>
@@ -129,15 +131,15 @@ const large = ref('large')
       <template #bodyCell="{ column, record }">
         <!--密码-->
         <template v-if="column.key === 'password'">
-          <a-typography-paragraph v-model:content="record.password" editable/>
+          <a-typography-paragraph v-model:content="record.password" editable />
         </template>
         <!--电话-->
         <template v-if="column.key === 'tel'">
-          <a-typography-paragraph v-model:content="record.tel" editable/>
+          <a-typography-paragraph v-model:content="record.tel" editable />
         </template>
         <!--昵称-->
         <template v-if="column.key === 'nickname'">
-          <a-typography-paragraph v-model:content="record.nickname" editable/>
+          <a-typography-paragraph v-model:content="record.nickname" editable />
         </template>
         <!--性别-->
         <template v-if="column.key === 'gender'">

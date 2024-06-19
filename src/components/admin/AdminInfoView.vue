@@ -24,7 +24,7 @@ const updateAdmin = async () => {
 
 <template>
   <!-- 管理员信息 -->
-  <a-descriptions title="管理员信息" bordered layout="vertical" :column="2" style="width: 50%;">
+  <a-descriptions title="管理员信息" bordered layout="vertical" :column="2" style="width: 70vw;">
     <a-descriptions-item label="用户名">{{ admin.username }}</a-descriptions-item>
     <a-descriptions-item label="密码">
       <a-input-password allow-clear v-model:value="admin.password" show-count :maxlength="10"/>
