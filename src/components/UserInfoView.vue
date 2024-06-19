@@ -40,7 +40,7 @@ const updateReader = async () => {
 
 <template>
   <!-- 用户信息 -->
-  <a-descriptions title="用户信息" bordered layout="vertical" :column="2" style="width: 50%;">
+  <a-descriptions title="用户信息" bordered layout="vertical" :column="2" style="width: 70vw;">
     <a-descriptions-item label="用户名">{{ reader.username }}</a-descriptions-item>
     <a-descriptions-item label="密码">
       <a-input-password allow-clear v-model:value="reader.password" show-count :maxlength="10" />
