@@ -89,6 +89,15 @@ const showModal = (status) => {
     <a-layout>
       <a-layout-header :style="{ position: 'fixed', zIndex: 1, width: '100%',background: '#00000021'}">
         <a-menu theme="light" mode="horizontal" :style="{ height:'100%',background: 'transparent'}">
+          <!--项目图标-->
+          <a-menu-item>
+            <a-tooltip title="项目地址">
+              <a href="https://github.com/caolib/cloud-book-frontend" target="_blank">
+                <a-avatar size="large" src="https://s2.loli.net/2024/06/19/CerofuylHxqs85z.png"/>
+              </a>
+            </a-tooltip>
+          </a-menu-item>
+          <!--登录注册等功能按钮-->
           <a-menu-item>
             <a-button type="primary" @click="showModal('login')" size="large">登录</a-button>
           </a-menu-item>
@@ -98,32 +107,27 @@ const showModal = (status) => {
           <a-menu-item>
             <a-button type="primary" size="large" @click="()=>{router.push('/admin/login')}">前往管理员</a-button>
           </a-menu-item>
-
           <!--github项目地址-->
           <a-menu-item style="text-align: right;flex-grow: 1">
             <a-tooltip title="项目地址">
               <a href="https://github.com/caolib/cloud-book-frontend" target="_blank">
-                <a-button shape="circle" size="large">
-                  <GithubFilled style="font-size: 20px"/>
-                </a-button>
+                <a-avatar size="large" src="https://docs.github.com/assets/cb-345/images/site/favicon.png"/>
               </a>
             </a-tooltip>
-          </a-menu-item>
-          <!--Cloudflare部署-->
-          <a-menu-item style="text-align: right;">
-            <a href="https://clbbook.pages.dev" target="_blank">
-              <a-tooltip title="项目预览">
-                <a-button shape="circle" size="large">
-                  <CloudServerOutlined style="font-size: 20px"/>
-                </a-button>
-              </a-tooltip>
-            </a>
           </a-menu-item>
           <!--apifox-->
           <a-menu-item style="text-align: right;">
             <a-tooltip title="API文档">
               <a href="https://ikunc.apifox.cn" target="_blank">
-                <a-avatar src="https://cdn.apifox.com/logo/apifox-logo-512.png"/>
+                <a-avatar size="large" src="https://cdn.apifox.com/logo/apifox-logo-512.png"/>
+              </a>
+            </a-tooltip>
+          </a-menu-item>
+          <!--Cloudflare部署-->
+          <a-menu-item style="text-align: right;">
+            <a-tooltip title="项目预览">
+              <a href="https://clbbook.pages.dev" target="_blank">
+                <a-avatar size="large" src="https://s2.loli.net/2024/06/19/Dxl1MURGtwWAuL4.png"/>
               </a>
             </a-tooltip>
           </a-menu-item>
@@ -131,11 +135,10 @@ const showModal = (status) => {
           <a-menu-item style="text-align: right;">
             <a-tooltip title="Ant Design Vue">
               <a href="https://antdv.com/docs/vue/introduce-cn" target="_blank">
-                <a-avatar src="https://www.antdv.com/assets/logo.1ef800a8.svg"/>
+                <a-avatar size="large" src="https://www.antdv.com/assets/logo.1ef800a8.svg"/>
               </a>
             </a-tooltip>
           </a-menu-item>
-
           <!--标题-->
           <a-menu-item style="text-align: right;width: auto;">
             <h1 style="background: #0000;color: white;font-size: 35px;font-family: '华文行楷',serif;">
