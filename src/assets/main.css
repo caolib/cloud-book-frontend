@@ -15,7 +15,7 @@ blockquote {
 
 /* 设置蓝色标签字体大小 */
 .ant-tag-blue {
-    font-size: large;
+    font-size: 16px;
 }
 
 /* 全局背景色 */
@@ -45,4 +45,9 @@ body {
 /* 背景颜色 */
 :where(.css-dev-only-do-not-override-1vujmny).ant-layout .ant-layout-content {
     background-color: white;
+}
+
+/* 按钮字体 */
+:where(.css-dev-only-do-not-override-1jy2f0m).ant-btn >span {
+    font-weight: bold;
 }

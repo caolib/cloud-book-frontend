@@ -77,7 +77,7 @@ const showModal = (status) => {
 </script>
 
 <template>
-  <div class="login-page" :style="{ height: '1080px', width: '100%' }">
+  <div class="login-page" :style="{ height: '100vh', width: '100vw' }">
     <a-layout>
       <!-- 顶部按钮 -->
       <a-layout-header :style="{ position: 'fixed', zIndex: 1, width: '100%', background: 'transparent' }">
