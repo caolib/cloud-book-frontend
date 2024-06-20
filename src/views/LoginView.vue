@@ -220,8 +220,10 @@ const showModal = (status) => {
 </template>
 
 <style scoped>
+
 .login-page {
   background-image: url('@/assets/bg.webp');
+  background-size: cover;
 }
 
 </style>
