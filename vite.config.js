@@ -6,7 +6,7 @@ import vue from '@vitejs/plugin-vue'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    vue(),
+    vue()
   ],
   resolve: {
     alias: {
@@ -22,11 +22,11 @@ export default defineConfig({
   //     '/api': { //匹配请求路径中含有 /api 的请求
   //       // target: 'http://localhost:10086', //后端服务地址
   //       // target: 'http://laptop:10086', //后端服务地址
-  //       target: 'https://mock.apipark.cn/m1/4171337-3811142-default', //Mock地址
-  //       changeOrigin: true,
-  //       rewrite: (path) => path.replace(/^\/api/, '') //去除路径中的/api，还原请求路径
-  //     }
-  //   }
-  // },
+        // target: 'https://mock.apipark.cn/m1/4171337-3811142-default', //Mock地址
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '') //去除路径中的/api，还原请求路径
+      }
+    }
+  }
 })
 

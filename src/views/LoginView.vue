@@ -1,6 +1,6 @@
 <script setup>
 import {reactive, ref} from 'vue'
-import {UserOutlined, LockOutlined, GithubFilled, CloudServerOutlined} from '@ant-design/icons-vue'
+import {UserOutlined, LockOutlined} from '@ant-design/icons-vue'
 import {loginService} from '@/api/login'
 import {message} from 'ant-design-vue'
 import {useReaderStore} from '@/stores/reader'
@@ -220,8 +220,10 @@ const showModal = (status) => {
 </template>
 
 <style scoped>
+
 .login-page {
   background-image: url('@/assets/bg.webp');
+  background-size: cover;
 }
 
 </style>

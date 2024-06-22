@@ -125,8 +125,9 @@ const borrowBook = async () => {
   const dueDate = dayjs(date.value[1]).format('YYYY-MM-DD').toString()
   await borrowService2(isbn, borrowDate, dueDate)
 
-  message.success('借阅成功!')
+  await fetchBooks()
   open.value = false
+  message.success('借阅成功!')
 }
 
 // 当前图书
@@ -148,7 +149,7 @@ const date = ref()
       <a-table :data-source="bookData" :columns="columns" :scroll="{ y: '65vh' }"
                :pagination="{ position: ['bottomCenter'], ...pagination }"
                :row-class-name="(_record, index) => (index % 2 === 1 ? 'table-striped' : null)" bordered>
-        <!--展开列标题-->
+        <!--展开列-->
         <template #expandColumnTitle />
 
         <!--表头-->

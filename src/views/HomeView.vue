@@ -19,6 +19,7 @@ const logout = async () => {
     <a-layout-header :style="{ position:'fixed', zIndex: 1, width: '100%',background: 'white',marginTop:'1px' }">
       <a-menu v-model:selectedKeys="selectedKeys" theme="light" mode="horizontal" :style="{ lineHeight: '10vh' }">
         <!-- 头像 -->
+        <!--https://img2.imgtp.com/2024/05/26/dequKQxT.png-->
         <a-menu-item key="3">
           <a-avatar :size="64" src="https://s2.loli.net/2024/06/02/wuJknzxaFigDSdL.gif" />
         </a-menu-item>

@@ -141,6 +141,7 @@ const add = async () => {
   await addBookService(addBook)
   show.value = false
   await fetchBooks()
+  message.success('添加成功!')
 }
 
 </script>
