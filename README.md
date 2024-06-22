@@ -1,35 +1,22 @@
 # book-frontend
 
-This template should help get you started developing with Vue 3 in Vite.
+> [!caution]
+>
+> 项目使用的包管理器为**pnpm**,使用前可以先使用npm下载`npm install -g pnpm`
 
-## Recommended IDE Setup
+## quick start
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+> 下载依赖
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
 
 ```sh
 pnpm install
 ```
 
-### Compile and Hot-Reload for Development
+## 启动
 
 ```sh
 pnpm dev
 ```
 
-### Compile and Minify for Production
-
-```sh
-pnpm build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-pnpm lint
-```
+> 其他配置使用可以参考[caolib/vue3-vite](https://github.com/caolib/vue3-vite)
