@@ -31,7 +31,7 @@ const loading = ref(false)
 const login = async function () {
   loading.value = true
   adminLoginService(loginDto)
-      .then(async (res) => {
+      。then(async (res) => {
         returnAdmin = res.data
         returnAdmin.password = loginDto.password
         message.success('hello,' + res.data.nickname, 3)
@@ -166,7 +166,7 @@ const showModal = (status) => {
   background-image: url('@/assets/bg.webp');
   background-size: cover;
 }
-
+  
 .admin-btn {
   background: #ff922b;
   color: white;
