@@ -30,8 +30,7 @@ const loading = ref(false)
 // 管理员登录
 const login = async function () {
   loading.value = true
-  adminLoginService(loginDto)
-      。then(async (res) => {
+  adminLoginService(loginDto).then(async (res) => {
         returnAdmin = res.data
         returnAdmin.password = loginDto.password
         message.success('hello,' + res.data.nickname, 3)
